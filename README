@@ -1,0 +1,32 @@
+What
+====
+
+A Linux kernel-level library to access a Redis (http://redis.io) server.
+We needed to have a kernel module do direct access to a key-value store,
+and since our key-value store was Redis, we ported Antirez's hiredis
+code (https://github.com/antirez/hiredis) to the kernel.
+
+How
+===
+
+You should be able to use the client in your Linux kernel modules and
+programs the same way you would use hiredis in userspace applications.
+To build this in a loadable module, just include the redisclient.o,
+sds.o and networking_utils.o in your mod-objs Makefile target. 
+
+I've also adapted hiredis's test.c (see testredis.c); see the included
+makefile to get a simple loadable module that will test redis
+functionality upon loading (make sure to set your server IP / port in
+testredis.c before building!)
+
+
+Compatibility
+=============
+
+This has been tested on Linux kernel 2.6.22-14 and Redis server versions
+2.0.0 and 2.2.0. 
+
+License
+=======
+
+Released under the same terms (GPLv2) as hiredis.
